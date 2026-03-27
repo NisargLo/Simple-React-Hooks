@@ -1,4 +1,4 @@
-import { useState, useOptimistic } from "react";
+import { useState, useOptimistic, startTransition } from "react";
 
 function UseOptimisticDemo() {
   const [likes, setLikes] = useState(0);
@@ -9,7 +9,9 @@ function UseOptimisticDemo() {
   );
 
   const handleLike = async () => {
-    addLike(1); // instant UI update
+    startTransition(() => {
+      addLike(1); // instant UI update
+    });
 
     // simulate API delay
     await new Promise((res) => setTimeout(res, 1000));
