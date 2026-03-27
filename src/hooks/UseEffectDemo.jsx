@@ -4,12 +4,11 @@ function UseEffectDemo() {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    document.title = "Count: " + count;
+    console.log("Count: " + count)
   }, [count]);
 
   return (
     <>
-      <p>Count: {count}</p>
       <button onClick={() => setCount(count + 1)}>Increment</button>
     </>
   );

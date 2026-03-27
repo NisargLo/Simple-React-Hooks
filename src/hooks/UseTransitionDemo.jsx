@@ -2,24 +2,20 @@ import { useTransition, useState } from "react";
 
 function UseTransitionDemo() {
   const [isPending, startTransition] = useTransition();
-  const [value, setValue] = useState("");
-  const [data, setData] = useState([]);
+  const [text, setText] = useState("");
 
   function handleChange(e) {
-    setValue(e.target.value);
+    const inputValue = e.target.value;
+
     startTransition(() => {
-      let tempData = [];
-      for (let i = 0; i < 10000; i++) {
-        tempData.push(e.target.value);
-      }
-      setData(tempData);
+      setText(inputValue);
     });
   }
 
   return (
     <>
-      <input onChange={handleChange} value={value} />
-      {data.map((d, i) => <li key={i}>{d}</li>)}
+      <input onChange={handleChange} />
+      {isPending ? <p>Loading...</p> : <p>{text}</p>}
     </>
   );
 }

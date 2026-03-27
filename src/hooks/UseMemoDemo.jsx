@@ -1,9 +1,9 @@
 import { useMemo, useState } from "react";
 
 function UseMemoDemo() {
-  const [something, setSomething] = useState(0);
+  const [count, setCount] = useState(0);
 
-  const dataNew = useMemo(() => {
+  const sumValue = useMemo(() => {
     let sum = 0;
     for (let i = 0; i < 1000000; i++) {
       sum += i;
@@ -13,8 +13,8 @@ function UseMemoDemo() {
 
   return (
     <>
-      <button onClick={() => setSomething(something + 1)}>Increment</button>
-      <p>sum = {dataNew} - something = {something}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <p>sum = {sumValue}, count = {count}</p>
     </>
   );
 }

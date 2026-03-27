@@ -1,28 +1,24 @@
-import { useState, useOptimistic, useTransition } from "react";
-
-const updateLikesInDb = async (newCount) => {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-  return newCount;
-};
+import { useState, useOptimistic } from "react";
 
 function UseOptimisticDemo() {
-  const [confirmedLikes, setConfirmedLikes] = useState(0);
-  const [isPending, startTransition] = useTransition();
-  const [optimisticLikes, addOptimisticLike] = useOptimistic(
-    confirmedLikes,
-    (currentLikes, optimisticUpdate) => currentLikes + optimisticUpdate
+  const [likes, setLikes] = useState(0);
+
+  const [optimisticLikes, addLike] = useOptimistic(
+    likes,
+    (current, value) => current + value
   );
 
   const handleLike = async () => {
-    startTransition(async () => {
-      addOptimisticLike(1);
-      const updatedCount = await updateLikesInDb(confirmedLikes + 1);
-      setConfirmedLikes(updatedCount);
-    });
+    addLike(1); // instant UI update
+
+    // simulate API delay
+    await new Promise((res) => setTimeout(res, 1000));
+
+    setLikes((prev) => prev + 1); // real update
   };
 
   return (
-    <button onClick={handleLike} disabled={isPending}>
+    <button onClick={handleLike}>
       {optimisticLikes} Likes
     </button>
   );

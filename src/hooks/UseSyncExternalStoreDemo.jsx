@@ -1,44 +1,29 @@
 import { useSyncExternalStore } from "react";
 
-let nextId = 0;
-let todos = [{ id: nextId++, text: "Todo #1" }];
+let count = 0;
 let listeners = [];
 
-const todosStore = {
-  addTodo() {
-    todos = [...todos, { id: nextId++, text: "Todo #" + nextId }];
-    emitChange();
-  },
-  subscribe(listener) {
-    listeners = [...listeners, listener];
-    return () => {
-      listeners = listeners.filter((l) => l !== listener);
-    };
-  },
-  getSnapshot() {
-    return todos;
-  },
-};
-
-function emitChange() {
-  for (let listener of listeners) {
-    listener();
-  }
+function subscribe(listener) {
+  listeners.push(listener);
+  return () => (listeners = listeners.filter(l => l !== listener));
 }
 
-function UseSyncExternalStoreDemo() {
-  const todos = useSyncExternalStore(todosStore.subscribe, todosStore.getSnapshot);
+function getSnapshot() {
+  return count;
+}
+
+function increment() {
+  count++;
+  listeners.forEach(l => l());
+}
+
+export default function App() {
+  const countValue = useSyncExternalStore(subscribe, getSnapshot);
 
   return (
     <>
-      <button onClick={() => todosStore.addTodo()}>Add todo</button>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
-        ))}
-      </ul>
+      <h2>{countValue}</h2>
+      <button onClick={increment}>Increment</button>
     </>
   );
 }
-
-export default UseSyncExternalStoreDemo;
