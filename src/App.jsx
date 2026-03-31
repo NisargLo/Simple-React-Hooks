@@ -14,6 +14,10 @@ import UseLayoutEffectDemo from "./hooks/UseLayoutEffectDemo";
 import UseOptimisticDemo from "./hooks/UseOptimisticDemo";
 import UseReducerDemo from "./hooks/UseReducerDemo";
 import UseSyncExternalStoreDemo from "./hooks/UseSyncExternalStoreDemo";
+import UseIdDemo from "./hooks/UseIdDemo";
+import UseInsertionEffectDemo from "./hooks/UseInsertionEffectDemo";
+import UseHookDemo from "./hooks/UseHookDemo";
+
 
 const hooks = [
   { name: "useState", component: UseStateDemo },
@@ -31,6 +35,10 @@ const hooks = [
   { name: "useOptimistic", component: UseOptimisticDemo },
   { name: "useReducer", component: UseReducerDemo },
   { name: "useSyncExternalStore", component: UseSyncExternalStoreDemo },
+  { name: "useId", component: UseIdDemo },
+  { name: "useInsertionEffect", component: UseInsertionEffectDemo },
+  { name: "use", component: UseHookDemo },
+
 ];
 
 function App() {
